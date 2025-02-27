@@ -21,10 +21,12 @@
           response.json(),
         );
       });
-    const result = (await Promise.allSettled(promises)).map((item) => {
-      const o = item as { value: any };
-      return o.value;
-    });
+    const result = (await Promise.allSettled(promises))
+      .map((item) => {
+        const o = item as { value: any };
+        return o.value;
+      })
+      .filter((item) => !item.message);
 
     if (result.length === 1) {
       whitelist = JSON.stringify(result[0], null, 2);
