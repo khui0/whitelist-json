@@ -48,12 +48,12 @@
   bind:value={usernames}
   {oninput}
   type="text"
-  class="input"
+  class="input w-full"
   placeholder="Comma-separated list of MC usernames"
 />
 <textarea
   bind:value={whitelist}
-  class="textarea overflow-auto break-normal whitespace-pre"
+  class="textarea w-full overflow-auto break-normal whitespace-pre"
   rows="8"
   readonly
   placeholder="whitelist.json"
@@ -62,9 +62,12 @@
   <button class="btn" onclick={copy}>Copy</button>
   <button class="btn btn-primary" onclick={download}>Download</button>
 </div>
-<a
-  class="link text-sm"
-  target="_blank"
-  rel="noopener noreferrer"
-  href="https://github.com/khui0/whitelist-json">GitHub</a
->
+<div class="text-base-content/50 flex flex-wrap gap-2 text-sm">
+  <a
+    class="link"
+    target="_blank"
+    rel="noopener noreferrer"
+    href="https://github.com/khui0/whitelist-json">GitHub</a
+  >
+  <p>{import.meta.env.PACKAGE_VERSION}</p>
+</div>
