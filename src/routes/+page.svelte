@@ -1,10 +1,19 @@
 <script lang="ts">
   import saveAs from "file-saver";
+  import { onMount } from "svelte";
 
   let usernames: string = $state("");
   let whitelist: string = $state("");
 
   let inputTimeout: number;
+
+  onMount(() => {
+    const stored = localStorage.getItem("usernames");
+    if (stored) {
+      usernames = stored;
+      fetchUsernames();
+    }
+  });
 
   function oninput() {
     clearTimeout(inputTimeout);
@@ -33,6 +42,8 @@
     } else if (result.length > 1) {
       whitelist = JSON.stringify(result, null, 2);
     }
+
+    localStorage.setItem("usernames", usernames);
   }
 
   function copy() {
