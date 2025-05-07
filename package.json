@@ -42,6 +42,7 @@
     "daisyui": "^5.0.35",
     "file-saver": "^2.0.5",
     "svelte-highlight": "^7.8.3",
-    "vite-plugin-package-version": "^1.1.0"
+    "vite-plugin-package-version": "^1.1.0",
+    "zod": "^4.0.0-beta.20250505T195954"
   }
 }

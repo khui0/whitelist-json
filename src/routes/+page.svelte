@@ -7,6 +7,9 @@
   import { fly } from "svelte/transition";
   import UsernameField from "../lib/components/username-field.svelte";
   import { data, fetchUUID, users, type Profile } from "../lib/profiles.svelte";
+  import ImportModal from "../lib/components/import-modal.svelte";
+
+  let importModal: ImportModal | null = $state(null);
 
   let errors: string[] = $state([]);
 
@@ -57,7 +60,7 @@
         fetchAll();
       }}
     />
-    <button class="btn">Import</button>
+    <button class="btn" onclick={importModal?.open}>Import</button>
   </div>
 </header>
 <ul class="flex w-full flex-col gap-2">
@@ -113,3 +116,9 @@
   >
   <p>{import.meta.env.PACKAGE_VERSION}</p>
 </div>
+<ImportModal
+  bind:this={importModal}
+  onsubmit={(value) => {
+    users.current = value.map((item) => item.name);
+  }}
+/>
