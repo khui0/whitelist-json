@@ -8,13 +8,30 @@
   import UsernameField from "../lib/components/username-field.svelte";
   import { data, fetchUUID, users, type Profile } from "../lib/profiles.svelte";
 
+  let errors: string[] = $state([]);
+
   onMount(() => {
     const stored = JSON.parse(localStorage.getItem("whitelist") || "[]") as Profile[];
     if (localStorage.getItem("whitelist") !== null) {
-      data.json = JSON.stringify(stored, null, 4);
+      setState(stored);
       users.current = stored.map((item) => item.name);
     }
   });
+
+  async function fetchAll() {
+    const res = await fetchUUID(users.current);
+    setState(res);
+    localStorage.setItem("whitelist", JSON.stringify(res));
+  }
+
+  function setState(json: Profile[]) {
+    data.json = JSON.stringify(
+      json.filter((item) => !item.error),
+      null,
+      4,
+    );
+    errors = json.filter((items) => items.error).map((item) => item.name);
+  }
 
   function copy() {
     navigator.clipboard.writeText(data.json);
@@ -37,6 +54,7 @@
       onsubmit={(value) => {
         if (users.current.some((item) => item.toLowerCase() === value.toLowerCase())) return;
         users.current.push(value);
+        fetchAll();
       }}
     />
     <button class="btn">Import</button>
@@ -48,14 +66,20 @@
       <li
         in:fly={{ y: -5, duration: 250 }}
         out:fly={{ y: -5, duration: 250 }}
-        class="flex items-center"
+        class="flex items-center gap-2"
       >
-        <p class="flex-1">{user}</p>
+        <p>{user}</p>
+        <div class="flex flex-1 flex-wrap items-center">
+          {#if errors.includes(user)}
+            <p in:fly={{ x: -5 }} class="badge badge-error font-medium uppercase">Error</p>
+          {/if}
+        </div>
         <button
           class="btn hover:btn-error"
           onclick={() => {
             const index = users.current.findIndex((item) => item === user);
             users.current.splice(index, 1);
+            fetchAll();
           }}
         >
           Delete
@@ -72,15 +96,7 @@
   </div>
   <div class="flex flex-wrap items-center justify-between gap-2">
     <div>
-      <button
-        class="btn"
-        onclick={async () => {
-          const res = await fetchUUID(users.current);
-          console.log(res);
-        }}
-      >
-        Fetch all
-      </button>
+      <button class="btn" onclick={fetchAll}>Fetch all</button>
     </div>
     <div class="flex gap-2">
       <button class="btn" onclick={copy}>Copy</button>

@@ -9,12 +9,12 @@ export const GET: RequestHandler = async ({ url }) => {
   return new Response(JSON.stringify(json));
 };
 
-interface whitelistEntry {
+interface Profile {
   uuid: string;
   name: string;
 }
 
-async function fetchPlayerJSON(username: string): Promise<whitelistEntry> {
+async function fetchPlayerJSON(username: string): Promise<Profile> {
   const response = await fetch("https://api.mojang.com/users/profiles/minecraft/" + username);
   const result: {
     id: string;

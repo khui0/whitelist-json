@@ -1,6 +1,7 @@
 export interface Profile {
   uuid: string;
   name: string;
+  error?: string;
 }
 
 export const users: { current: string[] } = $state({ current: [] });
@@ -14,12 +15,17 @@ export async function fetchUUID(users: string[]): Promise<Profile[]> {
       return fetch("/api?username=" + encodeURIComponent(item)).then((response) => response.json());
     });
 
-  const result = (await Promise.allSettled(promises))
-    .map((item) => {
-      const o = item as { value: unknown };
-      return o.value;
-    })
-    .filter((item) => !(item as { message: string }).message);
+  const result = (await Promise.allSettled(promises)).map((item, i) => {
+    const data = item.status === "fulfilled" && item.value;
+    if (data.message) {
+      return {
+        name: users[i],
+        error: data.message,
+      };
+    } else {
+      return data;
+    }
+  });
 
   return result as Profile[];
 }
