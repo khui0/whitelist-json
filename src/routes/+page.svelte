@@ -83,6 +83,7 @@
       }}
     />
     <button class="btn" onclick={importModal?.open}>Import</button>
+    <p class="font-medium text-base-content/50">({users.current.length})</p>
   </div>
 </header>
 <ul class="flex w-full flex-col gap-2">
