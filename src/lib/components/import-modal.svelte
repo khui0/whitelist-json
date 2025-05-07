@@ -35,7 +35,7 @@
     <p class="text-base-content/70 my-1">Paste an existing whitelist.json below</p>
     <textarea class="textarea my-2 w-full resize-none" bind:value></textarea>
     <p class="text-base-content/70 my-1">
-      Your changes will not be saved until you click 'Fetch all'
+      Changes will not be saved until you click the Refresh button
     </p>
     {#if error !== null}
       <ul class="text-error text-sm font-medium">
