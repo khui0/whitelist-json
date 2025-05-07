@@ -115,13 +115,15 @@
   {/if}
 </ul>
 <div class="flex w-full flex-col gap-2">
-  <div class="rounded-field relative w-full overflow-auto text-sm">
-    <Highlight language={json} code={data.json} />
+  <div class="rounded-field relative overflow-hidden">
+    <div class="max-h-[600px] w-full overflow-auto bg-[#1e1e1e] text-sm">
+      <Highlight language={json} code={data.json} />
+    </div>
     {#if showCopyOverlay}
       <div
         in:fade
         out:fade
-        class="pointer-events-none absolute inset-0 bg-success/5 backdrop-blur-xs"
+        class="bg-success/5 pointer-events-none absolute inset-0 backdrop-blur-xs"
       ></div>
       <div
         class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-2"
