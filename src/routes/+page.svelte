@@ -48,7 +48,7 @@
 </svelte:head>
 
 <header class="grid w-full grid-cols-1 gap-2 sm:grid-cols-[auto_1fr]">
-  <h1 class="text-center font-mono text-xl font-bold tracking-tight">whitelist.json</h1>
+  <h1 class="text-center text-xl font-bold">whitelist.json</h1>
   <div class="flex w-full items-center gap-2">
     <UsernameField
       onsubmit={(value) => {
@@ -103,4 +103,13 @@
       <button class="btn" onclick={download}>Download</button>
     </div>
   </div>
+</div>
+<div class="text-base-content/50 flex flex-wrap gap-2 text-sm">
+  <a
+    class="link"
+    target="_blank"
+    rel="noopener noreferrer"
+    href="https://github.com/khui0/whitelist-json">GitHub</a
+  >
+  <p>{import.meta.env.PACKAGE_VERSION}</p>
 </div>
