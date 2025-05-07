@@ -1,5 +1,7 @@
 <script lang="ts">
   import "../app.css";
+  import "@fontsource-variable/rubik";
+
   let { children } = $props();
 
   import { injectAnalytics } from "@vercel/analytics/sveltekit";
@@ -10,6 +12,6 @@
   <title>whitelist.json</title>
 </svelte:head>
 
-<main class="mx-auto flex max-w-110 flex-col items-center gap-4 p-4">
+<div class="mx-auto flex max-w-xl flex-col items-center gap-4 p-4">
   {@render children()}
-</main>
+</div>
